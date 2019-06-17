@@ -9,8 +9,7 @@
 
       <div *ngFor="let form of forms">
         <div *ngIf="form.type === 'select'">
-          <label for={{form.name}}></label>
-
+          <label for={{form.name}}>{{form.label}}</label>
           <select class="form-control" id="{{form.name}}"
                   [required]="form.validation.required"
                   [(ngModel)]="model[form.schemaAttribute]" name="{{form.name}}"
