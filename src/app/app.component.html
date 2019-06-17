@@ -9,7 +9,7 @@
 
       <div *ngFor="let form of forms">
         <div *ngIf="form.type === 'select'">
-          <label for={{form.name}}>{{form.label}}</label>
+          <label for={{form.name}}></label>
 
           <select class="form-control" id="{{form.name}}"
                   [required]="form.validation.required"
@@ -28,7 +28,7 @@
 
           <div class="form-group">
 
-          <label for={{form.name}}>{{form.label}}  {{form.name}}</label>
+          <label for={{form.name}}>{{form.label}} </label>
 
           <input type="text"
                  placeholder="{{form.placeholder}}"
@@ -47,11 +47,11 @@
 
         <div *ngIf="form.type === 'birthday'">
           <div class="form-group">
-            <label for={{form.name}}>{{form.label}}  {{form.name}}</label>
+            <label for={{form.name}}>{{form.label}}</label>
             <input type="date"
-                   placeholder="{{form.placeholder}}"
                    class="form-control" id="{{form.name}}"
                    [required]="form.validation.required"
+                   [value]="form.value"
                    [(ngModel)]="model[form.schemaAttribute]" name={{form.name}}
                    #input="ngModel">
             <div [hidden]="input.valid || input.pristine"
@@ -67,7 +67,7 @@
       </div>
     </div>
     <h5>{{userForm.form.valid}} </h5>
-    <button type="submit" class="btn btn-success" [disabled]="!userForm.form.valid"  (click)="onSubmit()" >Submit</button>
+    <button type="submit" class="btn btn-success" [disabled]="!userForm.form.valid"  (click)="onSubmit()" >{{buttonText}}</button>
 
     <h5>{{model | json}} </h5>
 

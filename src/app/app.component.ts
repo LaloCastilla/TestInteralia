@@ -10,9 +10,8 @@ import {Service} from '../services/service';
 })
 export class AppComponent {
 
-  model = new DatosUsuario('', '', '', '','');
 
-  username:any;
+
   templateJson = {
     "status": 0,
     "data":
@@ -149,7 +148,21 @@ export class AppComponent {
               }
           }]
       }
-  }
+  };
+
+  buttonText = this.templateJson.data.form[0].i18nStrings.buttonSubmit;
+
+
+  userData = this.templateJson.data.user;
+
+  givenName = this.userData.givenName;
+  familyName = this.userData.familyName;
+  emailName = this.userData.email;
+  birthday = this.userData.birthday;
+  gender = this.userData.gender;
+
+
+  model = new DatosUsuario(this.givenName,this.familyName,this.emailName,this.birthday,this.gender);
 
   forms = this.templateJson.data.form[0].fields;
   forms2:any;
