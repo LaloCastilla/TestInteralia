@@ -1,21 +1,86 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
 <router-outlet></router-outlet>
+
+<div class="container">
+  <h1>Datos Usuario</h1>
+  <form #userForm="ngForm">
+
+    <div class="form-group">
+
+      <div *ngFor="let form of forms">
+        <div *ngIf="form.type === 'select'">
+          <label for={{form.name}}>{{form.label}}</label>
+
+          <select class="form-control" id="{{form.name}}"
+                  [required]="form.validation.required"
+                  [(ngModel)]="model[form.schemaAttribute]" name="{{form.name}}"
+                  #combobox="ngModel">
+            <option *ngFor="let option of form.options" [value]="option.value"  [disabled]="option.disabled">{{option.text}}</option>
+          </select>
+          <div [hidden]="combobox.valid || select.pristine" class="alert alert-danger">
+            {{combobox.valid}}
+          </div>
+
+        </div>
+
+
+        <div *ngIf="form.type !== 'select' && form.type !== 'birthday'">
+
+          <div class="form-group">
+
+          <label for={{form.name}}>{{form.label}}  {{form.name}}</label>
+
+          <input type="text"
+                 placeholder="{{form.placeholder}}"
+                 class="form-control" id="{{form.name}}"
+                 [required]="form.validation.required"
+                 [(ngModel)]="model[form.schemaAttribute]" name={{form.name}}
+                 #input="ngModel">
+          <div [hidden]="input.valid || input.pristine"
+               class="alert alert-danger">
+
+            {{form.validation.messages.required}}
+          </div>
+
+        </div>
+        </div>
+
+        <div *ngIf="form.type === 'birthday'">
+          <div class="form-group">
+            <label for={{form.name}}>{{form.label}}  {{form.name}}</label>
+            <input type="date"
+                   placeholder="{{form.placeholder}}"
+                   class="form-control" id="{{form.name}}"
+                   [required]="form.validation.required"
+                   [(ngModel)]="model[form.schemaAttribute]" name={{form.name}}
+                   #input="ngModel">
+            <div [hidden]="input.valid || input.pristine"
+                 class="alert alert-danger">
+              {{form.validation.messages.required}}
+            </div>
+          </div>
+
+
+        </div>
+
+
+      </div>
+    </div>
+    <h5>{{userForm.form.valid}} </h5>
+    <button type="submit" class="btn btn-success" [disabled]="!userForm.form.valid"  (click)="onSubmit()" >Submit</button>
+
+    <h5>{{model | json}} </h5>
+
+    <h5>Valid Form:{{userForm.form.valid}} </h5>
+
+  </form>
+</div>
+
+
+
+
+<!--
+Copyright Google LLC. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->
